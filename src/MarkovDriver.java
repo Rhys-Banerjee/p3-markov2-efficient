@@ -10,7 +10,7 @@ import java.util.*;
 
 public class MarkovDriver {
 	
-	private static final int TEXT_SIZE = 144;
+	private static final int TEXT_SIZE = 16000;
 	
 	public static void markovGenerate(MarkovInterface<?> markov, String text) {
 		double start = System.nanoTime();
@@ -30,7 +30,7 @@ public class MarkovDriver {
 			
 		//String filename = "data/trump-sou17.txt";
 		//String filename = "data/bush-sou07.txt";
-		String filename = "data/trumptweets2020.txt";
+		String filename = "data/hawthorne.txt";
 
 		if (args.length > 0) {
 			filename = args[1];
@@ -38,7 +38,6 @@ public class MarkovDriver {
 		
 		File f = new File(filename);
 		String text = TextSource.textFromFile(f);
-
 		// only one line below should be uncommented
 		MarkovInterface<String> standard = new BaseMarkov();
 		MarkovInterface<String> efficient = new EfficientMarkov();
@@ -46,7 +45,7 @@ public class MarkovDriver {
 		MarkovInterface<WordGram> ewm = new EfficientWordMarkov();
 
 		// first parameter is one of the MarkovInterface variables
-		markovGenerate(ewm,text);
+		markovGenerate(standard,text);
 	}
 
 	private static void printNicely(String random, int screenWidth) {
