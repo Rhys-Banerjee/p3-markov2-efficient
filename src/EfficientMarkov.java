@@ -13,23 +13,25 @@ public class EfficientMarkov extends BaseMarkov {
 		myMap = new HashMap<String,ArrayList<String>>();
 	}
 	@Override
-	public void setTraining(String text){
-		super.setTraining(text);
+	public void setTraining(String text)
+	{
 		myMap.clear();
-		for(int i=0;i<myText.length()-myOrder;i++){
-			String markov = myText.substring(i, i+myOrder);
-			if(!myMap.containsKey(markov)){
-				myMap.put(markov,new ArrayList<String>());
-			}
-			if(i+1<=myText.length()){
-				String nextRaw = myText.substring(i, i+myOrder+1);
-				String next = nextRaw.substring(nextRaw.length()-1);
+		myText = text;
+		String markov;
+		String next;
+		for (int k = 0; k < myText.length() + 1 - myOrder; k++)
+		{
+			markov = myText.substring(k, myOrder + k);
+			if(!myMap.containsKey(markov))
+				myMap.put(markov,  new ArrayList<String>());
+			if(myText.length() == myOrder + k)
+				myMap.get(markov).add(PSEUDO_EOS);
+			else
+			{
+				next = myText.substring(myOrder + k, myOrder + k + 1);
 				myMap.get(markov).add(next);
-			}else{
-				myMap.get(markov).add("PSUEDO_EOS");
 			}
 		}
-
 	}
 	@Override
 	public ArrayList<String> getFollows(String key) {
