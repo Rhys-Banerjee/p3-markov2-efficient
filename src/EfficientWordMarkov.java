@@ -13,21 +13,23 @@ public class EfficientWordMarkov extends BaseWordMarkov{
         myMap = new HashMap<WordGram,ArrayList<String>>();
     }
     @Override
-    public void setTraining(String text){
+    public void setTraining(String text)
+    {
+        myMap = new HashMap<WordGram, ArrayList<String>>();
         myWords = text.split("\\s+");
         String next;
-        for(int we=0;we<myWords.length-myOrder;we++) {
-            WordGram markov = new WordGram(myWords, we, myOrder);
-            if (!myMap.containsKey(markov)) {
-                myMap.put(markov, new ArrayList<String>());
-            }
-            if (myWords.length == myOrder + we) {
+        for (int k = 0; k < myWords.length + 1 - myOrder; k++)
+        {
+            WordGram markov = new WordGram(myWords, k, myOrder);
+            if(!myMap.containsKey(markov))
+                myMap.put(markov,  new ArrayList<String>());
+            if(myWords.length == myOrder + k)
                 myMap.get(markov).add(PSEUDO_EOS);
-            } else {
-                next = myWords[myOrder + we];
+            else
+            {
+                next = myWords[myOrder + k];
                 myMap.get(markov).add(next);
             }
-
         }
     }
     @Override
